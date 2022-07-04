@@ -1,0 +1,12 @@
+[
+    {
+        "email": "test@test.ru",
+        "password": "a123456",
+        "confirm_password": "a123456"
+    },
+    {
+        "email": "admin@admin.ru",
+        "password": "a123456",
+        "confirm_password": "a123456"
+    }
+]

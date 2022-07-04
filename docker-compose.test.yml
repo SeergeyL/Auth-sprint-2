@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13-alpine
+    expose:
+      - 5432
+    env_file: .env.db
+
+  cache:
+    image: redis:6.2-alpine
+    expose:
+      - 6379
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - db
+      - cache
+    env_file: .env
+    entrypoint: >
+      sh -c "
+      python3 /tests/waiters/wait_for_postgres.py
+      && python3 /tests/waiters/wait_for_redis.py
+      && pytest
+      "

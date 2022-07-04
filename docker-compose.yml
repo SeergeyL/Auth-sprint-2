@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  web-server:
+    image: nginx:1.21.6
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx.conf
+      - ./nginx/configs:/etc/nginx/conf.d
+    depends_on:
+      - web
+    ports:
+      - 80:80
+
+  db:
+    image: postgres:13-alpine
+    expose:
+      - 5432
+    env_file: .env.db
+
+  cache:
+    image: redis:6.2-alpine
+    expose:
+      - 6379
+
+  web:
+    build: .
+    depends_on:
+      - db
+      - cache
+    ports:
+      - 8000
+    env_file: .env

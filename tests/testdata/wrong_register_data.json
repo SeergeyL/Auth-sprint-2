@@ -1,0 +1,31 @@
+[
+    {
+        "email": "test",
+        "password": "",
+        "confirm_password": ""
+    },
+    {
+        "email": "test@test.py",
+        "password": "123456"
+    },
+    {
+        "email": "test@test.py",
+        "password": "12345",
+        "confirm_password": "123"
+    },
+    {
+        "email": "test@test.py",
+        "password": "12345",
+        "confirm_password": "12345"
+    },
+    {
+        "email": "test@test.py",
+        "password": "123456",
+        "confirm_password": "123456"
+    },
+    {
+        "email": "test@test.py",
+        "password": "asdasd",
+        "confirm_password": "asdasd"
+    }
+]
