@@ -3,12 +3,14 @@ from flask import Flask
 
 from api.v1.auth import auth
 from api.v1.role import role
+from api.v1.social_auth import social_auth
 from commands.create_superuser import superuser
 from extensions.bcrypt import init_bcrypt
 from extensions.cache import init_cache
 from extensions.db import init_db
 from extensions.jwt import init_jwt
 from extensions.ma import init_schemas
+from extensions.oauth import init_oauth
 
 
 def create_app():
@@ -19,8 +21,9 @@ def create_app():
     # Routes
     app.register_blueprint(auth, url_prefix='/v1')
     app.register_blueprint(role, url_prefix='/v1')
+    app.register_blueprint(social_auth, url_prefix='/v1')
 
-    # Commandss
+    # Commands
     app.register_blueprint(superuser)
 
     # Postgres
@@ -39,6 +42,10 @@ def create_app():
 
     # JWT
     init_jwt(app)
+
+    # OAuth
+    init_oauth(app)
+
     return app
     
 
