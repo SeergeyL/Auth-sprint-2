@@ -1,0 +1,3 @@
+[submodule "Async-API"]
+	path = Async-API
+	url = https://github.com/SeergeyL/Async-API.git
