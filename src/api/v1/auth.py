@@ -1,7 +1,10 @@
+from http import HTTPStatus
+
 from extensions.cache import redis_db
 from extensions.jwt import jwt
 from flask import Blueprint, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
+from schemas import user_roles
 from services.auth_service import auth_service
 
 auth = Blueprint('auth', __name__)
@@ -169,3 +172,14 @@ def change_password():
     """
     user_data = request.get_json()
     return auth_service.change_password(user_data)
+
+
+@auth.route('/check-auth', methods=['GET'])
+@jwt_required()
+def check_auth():
+    identity = get_jwt_identity()
+    user = auth_service._check_user_exists(identity)
+    if not user:
+        return {'message': 'User does not exist.'}, \
+            HTTPStatus.UNAUTHORIZED
+    return user_roles.dumps(user)

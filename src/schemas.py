@@ -1,6 +1,6 @@
 import re
 
-from marshmallow import ValidationError, validates, validates_schema
+from marshmallow import ValidationError, validates, validates_schema, fields
 
 from extensions.ma import ma
 
@@ -52,7 +52,13 @@ class RoleSchema(ma.Schema):
     description = ma.String()
 
 
+class UserRoles(ma.Schema):
+    email = ma.Email()
+    roles = fields.Nested(RoleSchema, many=True)
+
+
 user_schema_register = UserRegisterSchema()
 login_history_schema = LoginHistorySchema()
 user_change_password_schema = UserChangePasswordSchema()
 role_schema = RoleSchema()
+user_roles = UserRoles()
