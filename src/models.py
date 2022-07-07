@@ -78,6 +78,9 @@ def create_partition(target, connection, **kw) -> None:
     connection.execute(
         """CREATE TABLE IF NOT EXISTS "user_sign_in_mobile" PARTITION OF "users_sign_in" FOR VALUES IN ('mobile')"""
     )
+    connection.execute(
+        """CREATE TABLE IF NOT EXISTS "user_sign_in_other" PARTITION OF "users_sign_in" FOR VALUES IN ('other')"""
+    )
 
 
 class LoginHistory(Base):

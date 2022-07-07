@@ -12,6 +12,8 @@ from models import LoginHistory, User
 from schemas import (login_history_schema, user_change_password_schema,
                      user_schema_register)
 
+from services.utils import get_device_type
+
 
 class AuthService:
     
@@ -126,7 +128,8 @@ class AuthService:
     def _create_login_history_record(self, user: User, user_agent: str):
         record = LoginHistory(
             user_id=user.id,
-            user_agent=user_agent
+            user_agent=user_agent,
+            user_device_type=get_device_type(user_agent)
         )
         db.session.add(record)
         db.session.commit()
