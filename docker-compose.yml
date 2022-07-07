@@ -1,8 +1,9 @@
 version: '3.8'
 
 services:
-  web-server:
+  auth-service:
     image: nginx:1.21.6
+    container_name: auth-service
     volumes:
       - ./nginx/nginx.conf:/etc/nginx.conf
       - ./nginx/configs:/etc/nginx/conf.d
@@ -13,17 +14,20 @@ services:
 
   db:
     image: postgres:13-alpine
+    container_name: db
     expose:
       - 5432
     env_file: .env.db
 
   cache:
     image: redis:6.2-alpine
+    container_name: cache
     expose:
       - 6379
 
   web:
     build: .
+    container_name: web
     depends_on:
       - db
       - cache
