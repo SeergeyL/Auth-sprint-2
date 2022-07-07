@@ -1,5 +1,5 @@
 from flasgger import Swagger
-from flask import Flask
+from flask import Flask, request
 
 from api.v1.auth import auth
 from api.v1.role import role
@@ -8,6 +8,7 @@ from commands.create_superuser import superuser
 from extensions.bcrypt import init_bcrypt
 from extensions.cache import init_cache
 from extensions.db import init_db
+from extensions.jaeger import init_jaeger
 from extensions.jwt import init_jwt
 from extensions.ma import init_schemas
 from extensions.oauth import init_oauth
@@ -46,10 +47,19 @@ def create_app():
     # OAuth
     init_oauth(app)
 
+    init_jaeger(app)
+
     return app
     
 
 app = create_app()
+
+
+@app.before_request
+def before_request():
+    request_id = request.headers.get('X-Request-Id')
+    if not request_id:
+        raise RuntimeError('request id is required') 
 
 
 if __name__ == '__main__':
