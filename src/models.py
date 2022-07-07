@@ -67,13 +67,34 @@ class Role(Base):
         return f'<Role {self.name}>'
 
 
+def create_partition(target, connection, **kw) -> None:
+    """ creating partition by user_sign_in """
+    connection.execute(
+        """CREATE TABLE IF NOT EXISTS "user_sign_in_pc" PARTITION OF "users_sign_in" FOR VALUES IN ('pc')"""
+    )
+    connection.execute(
+        """CREATE TABLE IF NOT EXISTS "user_sign_in_tablet" PARTITION OF "users_sign_in" FOR VALUES IN ('tablet')"""
+    )
+    connection.execute(
+        """CREATE TABLE IF NOT EXISTS "user_sign_in_mobile" PARTITION OF "users_sign_in" FOR VALUES IN ('mobile')"""
+    )
+
+
 class LoginHistory(Base):
     __tablename__ = 'login_history'
+    __table_args__ = (
+        UniqueConstraint('id', 'user_device_type'),
+        {
+            'postgresql_partition_by': 'LIST (user_device_type)',
+            'listeners': [('after_create', create_partition)],
+        }
+    )
 
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     user_id = db.Column(UUID(as_uuid=True), db.ForeignKey('user.id'), index=True)
     user_agent = db.Column(db.String)
     auth_datetime = db.Column(db.DateTime(), default=datetime.datetime.now)
+    user_device_type = db.Column(db.Text, primary_key=True)
 
     def __repr__(self):
         return f'<Login {self.user_id}: {self.auth_datetime}>'
