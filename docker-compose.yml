@@ -10,7 +10,7 @@ services:
     depends_on:
       - web
     ports:
-      - 80:80
+      - 81:80
 
   db:
     image: postgres:13-alpine
