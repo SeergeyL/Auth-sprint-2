@@ -2,6 +2,7 @@ from http import HTTPStatus
 
 from extensions.cache import redis_db
 from extensions.jwt import jwt
+from extensions.limiter import limiter
 from flask import Blueprint, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 from schemas import user_roles
@@ -51,6 +52,7 @@ def register():
 
 
 @auth.route('/login', methods=['POST'])
+@limiter.limit('1 per second')
 def login():
     """Login user endpoint
     ---
@@ -83,6 +85,7 @@ def login():
 
 @auth.route('/refresh', methods=['POST'])
 @jwt_required(refresh=True)
+@limiter.limit('1 per second')
 def refresh():
     """Refresh user tokens endpoint
     ---
@@ -102,6 +105,7 @@ def refresh():
 
 @auth.route('/logout', methods=['POST'])
 @jwt_required(verify_type=False)
+@limiter.limit('1 per second')
 def logout():
     """Revoke user tokens endpoint. Tokens are added to blocklist untill expiration
     ---
@@ -123,6 +127,7 @@ def logout():
 
 @auth.route('/login-history')
 @jwt_required()
+@limiter.limit('1 per second')
 def login_history():
     """User login history endpoint
     ---
@@ -144,6 +149,7 @@ def login_history():
 
 
 @auth.route('/change-password', methods=['POST'])
+@limiter.limit('1 per second')
 def change_password():
     """User change password endpoint
     ---
@@ -176,6 +182,7 @@ def change_password():
 
 @auth.route('/check-auth', methods=['GET'])
 @jwt_required()
+@limiter.limit('60 per second')
 def check_auth():
     identity = get_jwt_identity()
     user = auth_service._check_user_exists(identity)

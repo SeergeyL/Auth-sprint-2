@@ -11,6 +11,7 @@ from extensions.cache import init_cache
 from extensions.db import init_db
 from extensions.jaeger import init_jaeger
 from extensions.jwt import init_jwt
+from extensions.limiter import init_limiter
 from extensions.ma import init_schemas
 from extensions.oauth import init_oauth
 
@@ -51,6 +52,9 @@ def create_app():
     init_oauth(app)
 
     init_jaeger(app)
+
+    # Limiter
+    init_limiter(app)
 
     return app
     
