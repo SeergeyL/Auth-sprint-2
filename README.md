@@ -12,7 +12,7 @@ git clone https://github.com/SeergeyL/Auth-sprint-2.git
 git submodule update --init
 ```
 
-Оба сервиса (Async-API и Auth) запускаются по отдельности:
+Необходимо запустить оба сервиса (Async-API и Auth). Каждый запускается своей командой:
 ```
 docker-compose up -d
 ```
