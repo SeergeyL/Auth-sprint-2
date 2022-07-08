@@ -59,6 +59,10 @@ class BaseOAuth(abc.ABC):
     def authorize_user(self):
         pass
 
+    @abc.abstractmethod
+    def callback(self):
+        pass
+
     def get_redirect_url(self, provider):
         return url_for('social_auth.oauth_callback', provider=provider, _external=True)
 
