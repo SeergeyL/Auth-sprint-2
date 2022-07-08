@@ -23,7 +23,7 @@ class BaseConfig(BaseSettings):
     REDIS_HOST: str = Field('127.0.0.1', env='REDIS_HOST')
     REDIS_PORT: int = Field(6379, env='REDIS_PORT')
 
-    OAUTH_PROVIDERS = {
+    OAUTH_CREDENTIALS = {
         'yandex': OAuthProvider(
             provider='yandex',
             client_id=os.environ.get('YANDEX_OAUTH_ID'),

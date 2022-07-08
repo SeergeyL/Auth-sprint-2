@@ -5,7 +5,6 @@ db = SQLAlchemy()
 
 
 def init_db(app: Flask):
-    global redis_db
 
     POSTGRES_HOST = app.config['POSTGRES_HOST']
     POSTGRES_PORT = app.config['POSTGRES_PORT']

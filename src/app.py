@@ -5,6 +5,7 @@ from api.v1.auth import auth
 from api.v1.role import role
 from api.v1.social_auth import social_auth
 from commands.create_superuser import superuser
+from config import BaseConfig
 from extensions.bcrypt import init_bcrypt
 from extensions.cache import init_cache
 from extensions.db import init_db
@@ -16,7 +17,9 @@ from extensions.oauth import init_oauth
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('config.BaseConfig')
+    config = BaseConfig()
+    app.config.from_object(config)
+
     swagger = Swagger(app)
 
     # Routes
