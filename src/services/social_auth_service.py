@@ -30,7 +30,7 @@ class YandexOAuth(BaseOAuth):
     name = 'yandex'
 
     def __init__(self, credentials: dict):
-        self.service = OAuth2Service(**credentials)
+        self.service = OAuth2Service(**credentials.dict(exclude={'provider'}))
 
     def auth(self):
         return redirect(
