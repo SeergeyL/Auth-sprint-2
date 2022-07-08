@@ -9,6 +9,11 @@ def generate_random_string():
     return ''.join(secrets_choice(alphabet) for _ in range(16)) 
 
 
+def generate_random_email():
+    string = generate_random_string()
+    return f'{string}@auth.com'
+
+
 def get_device_type(user_agent: str):
     user_agent = parse(user_agent)
     if user_agent.is_pc:

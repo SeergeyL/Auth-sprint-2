@@ -1,6 +1,9 @@
 import os
 from pydantic import BaseSettings, Field, BaseModel
 
+from dotenv import load_dotenv
+load_dotenv()
+
 
 class OAuthProvider(BaseModel):
     provider: str
@@ -31,5 +34,13 @@ class BaseConfig(BaseSettings):
             authorize_url='https://oauth.yandex.ru/authorize',
             access_token_url='https://oauth.yandex.ru/token',
             base_url='https://login.yandex.ru/'
+        ),
+        'vk': OAuthProvider(
+            provider='vk',
+            client_id=os.environ.get('VK_OAUTH_ID'),
+            client_secret=os.environ.get('VK_OAUTH_SECRET'),
+            authorize_url='https://oauth.vk.com/authorize',
+            access_token_url='https://oauth.vk.com/access_token',
+            base_url='https://api.vk.com/method/'
         )
     }
