@@ -3,7 +3,7 @@
 # Запуск контейнеров
 Адрес проверки авторизации пользователя в Async-API
 ```
-AUTH_SERVICE_URL='http://127.0.0.1:80/v1/check-auth'
+AUTH_SERVICE_URL='http://127.0.0.1:81/v1/check-auth'
 ```
 Оба сервиса (Async-API и Auth) запускаются по отдельности:
 ```
@@ -17,3 +17,4 @@ make migrate
 ```
 make superuser
 ```
+P.S. Также кинул инвайт в репозиторий с AsyncAPI
