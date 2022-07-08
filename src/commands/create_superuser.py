@@ -19,5 +19,5 @@ def create(email, password):
     
     user.roles.append(role)
     db.session.add(user)
-    db.sessionn.commit()
+    db.session.commit()
     click.echo('Superuser successfully created.')
