@@ -21,3 +21,4 @@ opentelemetry-exporter-jaeger==1.10.0
 user-agents==2.2.0
 pyyaml==6.0
 ua-parser==0.15.0
+pydantic==1.9.1
