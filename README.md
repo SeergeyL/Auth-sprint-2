@@ -1,10 +1,17 @@
 # Auth-sprint-2
 
 # Запуск контейнеров
-Адрес проверки авторизации пользователя в Async-API
+Необходмо указать адрес проверки авторизации пользователя в Async-API
 ```
-AUTH_SERVICE_URL='http://127.0.0.1:81/v1/check-auth'
+AUTH_SERVICE_URL='http://{ADDRESS}:81/v1/check-auth'
 ```
+
+Копируется репозиторий вместе с сабмодулями
+```
+git clone https://github.com/SeergeyL/Auth-sprint-2.git
+git submodule update --init
+```
+
 Оба сервиса (Async-API и Auth) запускаются по отдельности:
 ```
 docker-compose up -d
@@ -17,4 +24,12 @@ make migrate
 ```
 make superuser
 ```
-P.S. Также кинул инвайт в репозиторий с AsyncAPI
+
+При запросах к Async-API в заголовках необходимо указать `access_token`.
+
+Получить токен можно воспользовавшись созданным суперюзером:
+```
+curl -H 'Content-Type: application/json' --data '{"email": "admin@admin.ru", "password": "123456"}' http://{ADDRESS}:81/v1/login
+```
+
+P.S. Также кинул инвайт в репозиторий с AsyncAPI, чтобы сабмодули склонировались
