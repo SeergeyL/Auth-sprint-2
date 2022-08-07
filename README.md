@@ -34,5 +34,3 @@ make superuser
 ```
 curl -H 'Content-Type: application/json' --data '{"email": "admin@admin.ru", "password": "123456"}' http://{ADDRESS}:81/v1/login
 ```
-
-P.S. Также кинул инвайт в репозиторий с AsyncAPI, чтобы сабмодули склонировались
